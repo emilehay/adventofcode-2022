@@ -31,9 +31,6 @@ function solveDay6(){
 
 function duplicatesFound(arr){
     let arrSet = [...new Set(arr)];
-    if(arrSet.length === arr.length){
-        console.log(arr, arrSet);
-    }
     return (arrSet.length !== arr.length) ? true : false;
 }
 
