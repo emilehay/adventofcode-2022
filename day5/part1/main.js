@@ -37,20 +37,19 @@ function solveDay5(){
 
     let finalStacks = prepBoxes(boxes);
     doInstructions(finalStacks, instructions);
-
-    return finalStacks
+    return getTopBoxes(finalStacks);
 }
 
 function prepBoxes(boxes) {
     let tempStacks = new Array(9);
-    boxes.forEach((row, index) => {
+    boxes.forEach((row) => {
         let counter = 0;
         for(let i = 1; i < row.length; i = i + 4){
             if(!tempStacks[counter]){
                 tempStacks[counter] = new Array();
             }
             if(row[i] !== " "){
-                tempStacks[counter].push(row[i])
+                tempStacks[counter].unshift(row[i])
             }
             counter++
         }
@@ -59,8 +58,28 @@ function prepBoxes(boxes) {
     return tempStacks;
 }
 function doInstructions(finalStacks, instructions) {
-    
-    return finalStacks
+    instructions.forEach(instruction => {
+        instruction = instruction.split(" ");
+        let amount = instruction[1];
+        let sourceIndex = instruction[3] - 1;
+        let destIndex = instruction[5] - 1;
+
+        for(let i = 0; i < amount; i++) {
+            finalStacks[destIndex].push(finalStacks[sourceIndex].pop());
+        }
+    });
+
+    return finalStacks;
+}
+
+function getTopBoxes(finalStacks){
+    let topBoxes = '';
+
+    for(let i = 0; i < finalStacks.length; i++){
+        topBoxes += finalStacks[i].slice(-1);
+    }
+
+    return topBoxes;
 }
 
 console.log(solveDay5());
